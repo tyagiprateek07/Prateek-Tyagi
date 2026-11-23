@@ -182,12 +182,12 @@
     }
   }
 
-  // Default to Bright (light) mode as requested ("do it in the bright format it can good")
-  let currentTheme = 'light';
+  // Default to Cinematic Dark Mode by default
+  let currentTheme = 'dark';
   try {
-    currentTheme = localStorage.getItem('portfolio-theme') || 'light';
+    currentTheme = localStorage.getItem('portfolio-theme') || 'dark';
   } catch (e) {
-    currentTheme = 'light';
+    currentTheme = 'dark';
   }
   applyTheme(currentTheme);
 

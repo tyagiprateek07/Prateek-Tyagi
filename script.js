@@ -61,7 +61,8 @@
 
   // High-DPI Canvas Resizing
   function resizeCanvas() {
-    const dpr = window.devicePixelRatio || 1;
+    // High-Definition DPR scaling for ultra-crisp frame rendering
+    const dpr = Math.max(window.devicePixelRatio || 1, 2);
     const width = window.innerWidth;
     const height = window.innerHeight;
 
@@ -473,4 +474,57 @@
   setActiveSlide(0);
   startAutoSlide();
   requestAnimationFrame(animate);
+
+  // ------------------------------------------------------------------------
+  // Scroll Progress Bar & Dynamic Content Animations
+  // ------------------------------------------------------------------------
+  // Add scroll progress bar to top of page
+  let progressBar = document.getElementById('page-scroll-progress');
+  if (!progressBar) {
+    progressBar = document.createElement('div');
+    progressBar.id = 'page-scroll-progress';
+    document.body.prepend(progressBar);
+  }
+
+  function updateProgressBar() {
+    const scrollY = window.scrollY;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    if (maxScroll > 0) {
+      const pct = (scrollY / maxScroll) * 100;
+      progressBar.style.width = `${pct}%`;
+    }
+  }
+  window.addEventListener('scroll', updateProgressBar, { passive: true });
+
+  // Attach reveal animations to every content section & card
+  function initContentAnimations() {
+    const targets = document.querySelectorAll(
+      '.section-header, .about-grid > *, .tl-card, .skill-group-card, .exp-card, .project-card, .cert-card, .cert-clean-card, .testi-card, .contact-content-grid > *'
+    );
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    targets.forEach((el, idx) => {
+      el.classList.add('reveal-init');
+      el.classList.add(`stagger-${(idx % 6) + 1}`);
+      observer.observe(el);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initContentAnimations);
+  } else {
+    initContentAnimations();
+  }
+
 })();

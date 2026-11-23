@@ -1,601 +1,1184 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroScaan — Early Autism Spectrum Disorder Detection</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prateek Tyagi — Data Analytics & Cyber Security Portfolio</title>
+  
+  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="loader-wrapper">
-            <div class="brain-loader">
-                <div class="pulse-ring"></div>
-                <div class="pulse-ring delay-1"></div>
-                <div class="pulse-ring delay-2"></div>
-                <svg class="brain-icon" viewBox="0 0 100 100" width="60" height="60">
-                    <path d="M50 10 C30 10, 15 25, 15 45 C15 55, 20 63, 28 68 C28 78, 35 88, 50 90 C65 88, 72 78, 72 68 C80 63, 85 55, 85 45 C85 25, 70 10, 50 10Z" fill="none" stroke="url(#loaderGrad)" stroke-width="2"/>
-                    <path d="M50 20 C50 20, 35 35, 35 50 C35 60, 42 70, 50 75" fill="none" stroke="url(#loaderGrad)" stroke-width="1.5" opacity="0.7"/>
-                    <path d="M50 20 C50 20, 65 35, 65 50 C65 60, 58 70, 50 75" fill="none" stroke="url(#loaderGrad)" stroke-width="1.5" opacity="0.7"/>
-                    <defs>
-                        <linearGradient id="loaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#00f5ff"/>
-                            <stop offset="100%" style="stop-color:#8b5cf6"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-            </div>
-            <p class="loader-text">Initializing Neural Interface<span class="dots">...</span></p>
-            <div class="loader-bar"><div class="loader-progress"></div></div>
+
+  <!-- Loading Bar -->
+  <div id="loader-bar" class="loader-bar"></div>
+
+  <!-- Background Canvas Container (Always Active & On) -->
+  <div class="canvas-container bg-visible" id="canvas-container">
+    <canvas id="animation-canvas"></canvas>
+    <!-- Adaptive Theme Vignette & Gradient Overlay -->
+    <div class="vignette-overlay"></div>
+  </div>
+
+  <!-- Top Navigation Header -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <!-- Minimal Professional Logo -->
+      <a href="#hero" class="brand-logo" aria-label="Prateek Tyagi Homepage">
+        <span class="logo-monogram">PT</span>
+        <span class="brand-name">PRATEEK TYAGI</span>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="nav-links">
+        <a href="#about" class="nav-link">Introduction</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#certifications" class="nav-link">Certifications</a>
+        <a href="#testimonials" class="nav-link">Testimonials</a>
+      </nav>
+
+      <!-- Header Action Buttons -->
+      <div class="header-action">
+        <!-- Bright / Dark Mode Theme Toggle Button -->
+        <button id="theme-toggle-btn" class="btn-theme-toggle" aria-label="Toggle Bright / Dark Mode" title="Switch between Bright and Dark theme">
+          <span class="theme-icon" id="theme-icon">🌙</span>
+          <span class="theme-label" id="theme-label">Dark</span>
+        </button>
+
+        <a href="#contact" class="btn-resume-link" title="Download CV">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="12" y1="18" x2="12" y2="12"></line>
+            <line x1="9" y1="15" x2="15" y2="15"></line>
+          </svg>
+          <span>CV</span>
+        </a>
+        <a href="#contact" class="btn-contact">
+          <span>Contact Me</span>
+          <svg class="btn-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       HERO CAROUSEL SECTION (Three-Slide Cinematic Showcase)
+       ======================================================================== -->
+  <section class="hero-stage" id="hero">
+    <div class="hero-content">
+      
+      <!-- Slide 01 — INTRODUCTION -->
+      <article class="hero-slide active" data-slide="0">
+        <div class="category-tag">
+          <span class="tag-text">PRATEEK TYAGI</span>
+          <span class="tag-line"></span>
         </div>
+        <h1 class="hero-title">
+          Building Ideas<br>
+          <span class="title-sub">Into Impact.</span>
+        </h1>
+        <p class="hero-desc">
+          Computer Science Engineering student specializing in Cyber Security, passionate about Data Analytics, programming, and technology-driven problem solving.
+        </p>
+        <div class="hero-secondary-tag">
+          Curious Mind. Analytical Thinking. Continuous Learning.
+        </div>
+        <a href="#about" class="hero-cta">
+          <span>EXPLORE MY PROFILE</span>
+          <svg class="cta-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </article>
+
+      <!-- Slide 02 — TECHNICAL EXPERTISE -->
+      <article class="hero-slide" data-slide="1">
+        <div class="category-tag">
+          <span class="tag-text">TECHNICAL EXPERTISE</span>
+          <span class="tag-line"></span>
+        </div>
+        <h1 class="hero-title">
+          Driven by Data.<br>
+          <span class="title-sub">Powered by Technology.</span>
+        </h1>
+        <p class="hero-desc">
+          Developing practical skills in programming, data analysis, visualization, and machine learning while building a strong foundation in cybersecurity.
+        </p>
+        <div class="hero-skills-pill-wrap">
+          <span class="h-pill">Python</span>
+          <span class="h-pill">Java (Basic)</span>
+          <span class="h-pill">C/C++ (Basic)</span>
+          <span class="h-pill">SQL</span>
+          <span class="h-pill">Pandas</span>
+          <span class="h-pill">NumPy</span>
+          <span class="h-pill">Data Processing</span>
+          <span class="h-pill">Matplotlib</span>
+          <span class="h-pill">Scikit-learn</span>
+          <span class="h-pill">DSA</span>
+          <span class="h-pill">Networking</span>
+          <span class="h-pill">Server Admin</span>
+        </div>
+        <a href="#skills" class="hero-cta">
+          <span>EXPLORE MY SKILLS</span>
+          <svg class="cta-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </article>
+
+      <!-- Slide 03 — PROJECTS & INNOVATION -->
+      <article class="hero-slide" data-slide="2">
+        <div class="category-tag">
+          <span class="tag-text">PROJECTS & INNOVATION</span>
+          <span class="tag-line"></span>
+        </div>
+        <h1 class="hero-title">
+          Ideas That<br>
+          <span class="title-sub">Create Possibilities.</span>
+        </h1>
+        <p class="hero-desc">
+          Turning academic knowledge into practical solutions through technology, research, experimentation, and innovative thinking.
+        </p>
+        <div class="hero-projects-preview-row">
+          <div class="hero-project-preview">
+            <span class="hp-badge">Featured</span>
+            <span class="hp-name">VASTUM-CYCL — Smart Waste Management</span>
+          </div>
+          <div class="hero-project-preview">
+            <span class="hp-badge ongoing">Ongoing</span>
+            <span class="hp-name">E-Commerce Sales Analyst — Analytics Project</span>
+          </div>
+        </div>
+        <a href="#projects" class="hero-cta">
+          <span>DISCOVER MY PROJECTS</span>
+          <svg class="cta-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </article>
+
     </div>
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
+    <!-- Bottom Controls & Slide Navigation -->
+    <footer class="hero-footer">
+      <!-- Slide Indicator (01 — 02 03) -->
+      <div class="slide-indicator" role="tablist" aria-label="Hero Carousel Navigation">
+        <button class="slide-num active" data-target="0" role="tab" aria-selected="true" aria-label="Slide 01: Introduction">01</button>
+        <span class="indicator-divider" id="indicator-line"></span>
+        <button class="slide-num" data-target="1" role="tab" aria-selected="false" aria-label="Slide 02: Skills">02</button>
+        <button class="slide-num" data-target="2" role="tab" aria-selected="false" aria-label="Slide 03: Projects">03</button>
+      </div>
 
-    <!-- 3D Canvas Background -->
-    <canvas id="three-canvas"></canvas>
-
-    <!-- Particle Overlay -->
-    <canvas id="particle-canvas"></canvas>
-
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">
-                <div class="logo-icon">
-                    <div class="logo-pulse"></div>
-                    <svg viewBox="0 0 40 40" width="32" height="32">
-                        <circle cx="20" cy="20" r="8" fill="none" stroke="#00f5ff" stroke-width="1.5"/>
-                        <circle cx="20" cy="20" r="3" fill="#00f5ff"/>
-                        <circle cx="20" cy="12" r="1.5" fill="#8b5cf6"/>
-                        <circle cx="27" cy="17" r="1.5" fill="#8b5cf6"/>
-                        <circle cx="27" cy="25" r="1.5" fill="#8b5cf6"/>
-                        <circle cx="20" cy="28" r="1.5" fill="#8b5cf6"/>
-                        <circle cx="13" cy="25" r="1.5" fill="#8b5cf6"/>
-                        <circle cx="13" cy="17" r="1.5" fill="#8b5cf6"/>
-                        <line x1="20" y1="20" x2="20" y2="12" stroke="#8b5cf680" stroke-width="0.5"/>
-                        <line x1="20" y1="20" x2="27" y2="17" stroke="#8b5cf680" stroke-width="0.5"/>
-                        <line x1="20" y1="20" x2="27" y2="25" stroke="#8b5cf680" stroke-width="0.5"/>
-                        <line x1="20" y1="20" x2="20" y2="28" stroke="#8b5cf680" stroke-width="0.5"/>
-                        <line x1="20" y1="20" x2="13" y2="25" stroke="#8b5cf680" stroke-width="0.5"/>
-                        <line x1="20" y1="20" x2="13" y2="17" stroke="#8b5cf680" stroke-width="0.5"/>
-                    </svg>
-                </div>
-                <span>Neuro<span class="highlight">Scaan</span></span>
-            </a>
-            <div class="nav-links">
-                <a href="#hero" class="nav-link active">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#how-it-works" class="nav-link">Process</a>
-                <a href="#stats" class="nav-link">Impact</a>
-                <a href="#testimonials" class="nav-link">Stories</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
-            <a href="#contact" class="nav-cta">Get Started</a>
-            <button class="nav-toggle" aria-label="Toggle menu">
-                <span></span><span></span><span></span>
-            </button>
+      <!-- Scroll to explore hint -->
+      <a href="#about" class="scroll-hint" id="scroll-hint" aria-label="Scroll to portfolio content">
+        <span class="hint-text">Scroll to explore</span>
+        <div class="scroll-icon-wrap">
+          <span class="scroll-track-line"></span>
+          <span class="scroll-dot"></span>
         </div>
-    </nav>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu">
-        <div class="mobile-menu-links">
-            <a href="#hero">Home</a>
-            <a href="#about">About</a>
-            <a href="#features">Features</a>
-            <a href="#how-it-works">Process</a>
-            <a href="#stats">Impact</a>
-            <a href="#testimonials">Stories</a>
-            <a href="#contact">Contact</a>
-        </div>
-    </div>
-
-    <!-- Hero Section -->
-    <section id="hero">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span class="badge-dot"></span>
-                AI-Powered Neurodevelopmental Screening
-            </div>
-            <h1>
-                <span class="line">Decode the</span>
-                <span class="line gradient-text">Neural Spectrum</span>
-                <span class="line">Early.</span>
-            </h1>
-            <p class="hero-subtitle">
-                NeuroScaan leverages advanced AI and neuroimaging to detect Autism Spectrum Disorder 
-                in its earliest stages — empowering families with knowledge, hope, and a clear path forward.
-            </p>
-            <div class="hero-actions">
-                <a href="#about" class="btn btn-primary">
-                    <span>Explore NeuroScaan</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-                <a href="#how-it-works" class="btn btn-secondary">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    <span>Watch Demo</span>
-                </a>
-            </div>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <span class="stat-number" data-count="94.7">94.7</span><span class="stat-suffix">%</span>
-                    <span class="stat-label">Detection Accuracy</span>
-                </div>
-                <div class="stat-divider"></div>
-                <div class="hero-stat">
-                    <span class="stat-number" data-count="18">18</span><span class="stat-suffix">mo</span>
-                    <span class="stat-label">Earlier Detection</span>
-                </div>
-                <div class="stat-divider"></div>
-                <div class="hero-stat">
-                    <span class="stat-number" data-count="50">50</span><span class="stat-suffix">K+</span>
-                    <span class="stat-label">Children Screened</span>
-                </div>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
-            <span>Scroll to explore</span>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-header" data-animate="fade-up">
-                <span class="section-tag">About NeuroScaan</span>
-                <h2>Redefining <span class="gradient-text">Early Detection</span></h2>
-                <p class="section-desc">A groundbreaking fusion of artificial intelligence, neuroimaging, and behavioral science to identify autism spectrum indicators before traditional methods can.</p>
-            </div>
-            <div class="about-grid">
-                <div class="about-card glass-card" data-animate="fade-up" data-delay="0.1">
-                    <div class="card-icon" style="--accent: #00f5ff;">
-                        <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M24 8 C24 8, 14 18, 14 28 C14 34, 18 38, 24 40 C30 38, 34 34, 34 28 C34 18, 24 8, 24 8Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="24" r="4" fill="currentColor" opacity="0.3"/><circle cx="24" cy="24" r="1.5" fill="currentColor"/></svg>
-                    </div>
-                    <h3>AI Neural Mapping</h3>
-                    <p>Our proprietary deep learning algorithms analyze neural connectivity patterns, identifying subtle biomarkers invisible to conventional screening.</p>
-                </div>
-                <div class="about-card glass-card" data-animate="fade-up" data-delay="0.2">
-                    <div class="card-icon" style="--accent: #8b5cf6;">
-                        <svg viewBox="0 0 48 48" width="48" height="48"><rect x="8" y="8" width="32" height="32" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M16 32 L20 22 L26 28 L30 18 L36 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="22" r="2" fill="currentColor" opacity="0.5"/><circle cx="30" cy="18" r="2" fill="currentColor" opacity="0.5"/></svg>
-                    </div>
-                    <h3>Behavioral Analysis</h3>
-                    <p>Computer vision tracks micro-expressions, eye-tracking patterns, and social interaction cues in natural settings — no clinical environment needed.</p>
-                </div>
-                <div class="about-card glass-card" data-animate="fade-up" data-delay="0.3">
-                    <div class="card-icon" style="--accent: #f472b6;">
-                        <svg viewBox="0 0 48 48" width="48" height="48"><path d="M24 8 L28 18 L38 20 L30 28 L32 38 L24 34 L16 38 L18 28 L10 20 L20 18 Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="24" r="6" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"/></svg>
-                    </div>
-                    <h3>Predictive Scoring</h3>
-                    <p>Multi-dimensional spectrum scoring provides nuanced results — not just yes or no, but a comprehensive developmental profile with actionable insights.</p>
-                </div>
-                <div class="about-card glass-card" data-animate="fade-up" data-delay="0.4">
-                    <div class="card-icon" style="--accent: #34d399;">
-                        <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="16" r="8" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 40 C12 32, 17 28, 24 28 C31 28, 36 32, 36 40" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M32 14 L36 18 L44 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </div>
-                    <h3>Family-Centered Care</h3>
-                    <p>Results are delivered with empathy — paired with personalized intervention plans, local specialist connections, and ongoing support resources.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features">
-        <div class="container">
-            <div class="section-header" data-animate="fade-up">
-                <span class="section-tag">Core Capabilities</span>
-                <h2>Powered by <span class="gradient-text">Breakthrough Science</span></h2>
-            </div>
-            <div class="features-showcase">
-                <div class="feature-item" data-animate="fade-right">
-                    <div class="feature-visual">
-                        <div class="feature-3d-card">
-                            <div class="hologram-effect">
-                                <div class="holo-line"></div>
-                                <div class="holo-line"></div>
-                                <div class="holo-line"></div>
-                                <div class="scan-line"></div>
-                            </div>
-                            <div class="feature-icon-large">
-                                <svg viewBox="0 0 80 80" width="80" height="80">
-                                    <circle cx="40" cy="40" r="35" fill="none" stroke="#00f5ff" stroke-width="0.5" stroke-dasharray="4 4"/>
-                                    <circle cx="40" cy="40" r="25" fill="none" stroke="#8b5cf6" stroke-width="0.5" stroke-dasharray="2 6"/>
-                                    <circle cx="40" cy="40" r="15" fill="none" stroke="#00f5ff" stroke-width="1"/>
-                                    <circle cx="40" cy="40" r="4" fill="#00f5ff" opacity="0.8"/>
-                                    <line x1="40" y1="5" x2="40" y2="15" stroke="#00f5ff" stroke-width="0.5" opacity="0.5"/>
-                                    <line x1="40" y1="65" x2="40" y2="75" stroke="#00f5ff" stroke-width="0.5" opacity="0.5"/>
-                                    <line x1="5" y1="40" x2="15" y2="40" stroke="#00f5ff" stroke-width="0.5" opacity="0.5"/>
-                                    <line x1="65" y1="40" x2="75" y2="40" stroke="#00f5ff" stroke-width="0.5" opacity="0.5"/>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="feature-content">
-                        <span class="feature-number">01</span>
-                        <h3>EEG Signal Processing</h3>
-                        <p>Non-invasive electroencephalogram analysis using 256-channel neural caps captures brain wave patterns with millisecond precision. Our AI decodes complex neural oscillations that differentiate typical and atypical development trajectories.</p>
-                        <ul class="feature-list">
-                            <li><span class="check">✦</span> Real-time neural oscillation mapping</li>
-                            <li><span class="check">✦</span> Frequency band anomaly detection</li>
-                            <li><span class="check">✦</span> Cross-hemispheric connectivity analysis</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="feature-item reverse" data-animate="fade-left">
-                    <div class="feature-visual">
-                        <div class="feature-3d-card">
-                            <div class="dna-helix">
-                                <div class="dna-strand"></div>
-                                <div class="dna-strand delay"></div>
-                            </div>
-                            <div class="feature-icon-large">
-                                <svg viewBox="0 0 80 80" width="80" height="80">
-                                    <path d="M20 10 Q40 25, 60 20 Q40 35, 20 30 Q40 45, 60 40 Q40 55, 20 50 Q40 65, 60 60 Q40 75, 20 70" fill="none" stroke="#8b5cf6" stroke-width="1.5" opacity="0.8"/>
-                                    <circle cx="20" cy="10" r="3" fill="#8b5cf6"/>
-                                    <circle cx="60" cy="20" r="3" fill="#00f5ff"/>
-                                    <circle cx="20" cy="30" r="3" fill="#8b5cf6"/>
-                                    <circle cx="60" cy="40" r="3" fill="#00f5ff"/>
-                                    <circle cx="20" cy="50" r="3" fill="#8b5cf6"/>
-                                    <circle cx="60" cy="60" r="3" fill="#00f5ff"/>
-                                    <circle cx="20" cy="70" r="3" fill="#8b5cf6"/>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="feature-content">
-                        <span class="feature-number">02</span>
-                        <h3>Genomic Risk Profiling</h3>
-                        <p>Integrating polygenic risk scores with epigenetic markers, NeuroScaan identifies genetic predispositions across 1,000+ ASD-associated loci. Combined with environmental factor analysis for a holistic risk assessment.</p>
-                        <ul class="feature-list">
-                            <li><span class="check">✦</span> Multi-loci genetic variant scanning</li>
-                            <li><span class="check">✦</span> Epigenetic methylation patterns</li>
-                            <li><span class="check">✦</span> Gene-environment interaction modeling</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="feature-item" data-animate="fade-right">
-                    <div class="feature-visual">
-                        <div class="feature-3d-card">
-                            <div class="eye-tracker">
-                                <div class="eye-ring"></div>
-                                <div class="eye-pupil"></div>
-                                <div class="track-dots">
-                                    <span></span><span></span><span></span>
-                                    <span></span><span></span><span></span>
-                                </div>
-                            </div>
-                            <div class="feature-icon-large">
-                                <svg viewBox="0 0 80 80" width="80" height="80">
-                                    <ellipse cx="40" cy="40" rx="30" ry="18" fill="none" stroke="#00f5ff" stroke-width="1.5"/>
-                                    <circle cx="40" cy="40" r="10" fill="none" stroke="#8b5cf6" stroke-width="1.5"/>
-                                    <circle cx="40" cy="40" r="4" fill="#00f5ff"/>
-                                    <line x1="10" y1="40" x2="22" y2="40" stroke="#00f5ff" stroke-width="0.5" opacity="0.4"/>
-                                    <line x1="58" y1="40" x2="70" y2="40" stroke="#00f5ff" stroke-width="0.5" opacity="0.4"/>
-                                    <line x1="40" y1="22" x2="40" y2="28" stroke="#00f5ff" stroke-width="0.5" opacity="0.4"/>
-                                    <line x1="40" y1="52" x2="40" y2="58" stroke="#00f5ff" stroke-width="0.5" opacity="0.4"/>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="feature-content">
-                        <span class="feature-number">03</span>
-                        <h3>Smart Eye Tracking</h3>
-                        <p>Proprietary gaze-pattern analysis measures social attention, joint attention responses, and visual preference patterns. Infants naturally engage with our gamified screening — no special equipment beyond a tablet.</p>
-                        <ul class="feature-list">
-                            <li><span class="check">✦</span> Saccade & fixation pattern analysis</li>
-                            <li><span class="check">✦</span> Social vs. geometric preference mapping</li>
-                            <li><span class="check">✦</span> Attention disengagement metrics</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section id="how-it-works">
-        <div class="container">
-            <div class="section-header" data-animate="fade-up">
-                <span class="section-tag">The Process</span>
-                <h2>How <span class="gradient-text">NeuroScaan</span> Works</h2>
-                <p class="section-desc">A seamless four-step journey from initial screening to personalized care plan.</p>
-            </div>
-            <div class="process-timeline">
-                <div class="timeline-line">
-                    <div class="timeline-progress"></div>
-                </div>
-                <div class="process-step" data-animate="fade-up" data-delay="0.1">
-                    <div class="step-marker">
-                        <div class="marker-pulse"></div>
-                        <span>1</span>
-                    </div>
-                    <div class="step-card glass-card">
-                        <div class="step-icon">
-                            <svg viewBox="0 0 48 48" width="40" height="40"><path d="M24 4 L24 44 M14 14 L24 4 L34 14" fill="none" stroke="#00f5ff" stroke-width="2" stroke-linecap="round"/><rect x="10" y="20" width="28" height="20" rx="3" fill="none" stroke="#00f5ff" stroke-width="1.5"/><circle cx="24" cy="30" r="4" fill="none" stroke="#8b5cf6" stroke-width="1.5"/></svg>
-                        </div>
-                        <h4>Upload & Intake</h4>
-                        <p>Parents upload developmental milestone videos and complete a smart questionnaire. Our AI begins preliminary behavioral analysis immediately.</p>
-                    </div>
-                </div>
-                <div class="process-step" data-animate="fade-up" data-delay="0.2">
-                    <div class="step-marker">
-                        <div class="marker-pulse"></div>
-                        <span>2</span>
-                    </div>
-                    <div class="step-card glass-card">
-                        <div class="step-icon">
-                            <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="18" fill="none" stroke="#8b5cf6" stroke-width="1.5"/><path d="M18 24 C18 24, 21 18, 24 22 C27 26, 30 16, 33 24" fill="none" stroke="#00f5ff" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="24" r="3" fill="#8b5cf6" opacity="0.3"/></svg>
-                        </div>
-                        <h4>Neural Analysis</h4>
-                        <p>Multi-modal AI processes EEG data, eye-tracking patterns, speech prosody, and motor coordination through our trained neural networks.</p>
-                    </div>
-                </div>
-                <div class="process-step" data-animate="fade-up" data-delay="0.3">
-                    <div class="step-marker">
-                        <div class="marker-pulse"></div>
-                        <span>3</span>
-                    </div>
-                    <div class="step-card glass-card">
-                        <div class="step-icon">
-                            <svg viewBox="0 0 48 48" width="40" height="40"><rect x="8" y="8" width="32" height="32" rx="4" fill="none" stroke="#00f5ff" stroke-width="1.5"/><line x1="8" y1="16" x2="40" y2="16" stroke="#00f5ff" stroke-width="0.5"/><rect x="12" y="20" width="10" height="6" rx="1" fill="#8b5cf6" opacity="0.3"/><rect x="12" y="28" width="16" height="2" rx="1" fill="#00f5ff" opacity="0.3"/><rect x="12" y="32" width="12" height="2" rx="1" fill="#00f5ff" opacity="0.2"/></svg>
-                        </div>
-                        <h4>Spectrum Report</h4>
-                        <p>A comprehensive, easy-to-understand diagnostic report with spectrum positioning, confidence intervals, and development area breakdowns.</p>
-                    </div>
-                </div>
-                <div class="process-step" data-animate="fade-up" data-delay="0.4">
-                    <div class="step-marker">
-                        <div class="marker-pulse"></div>
-                        <span>4</span>
-                    </div>
-                    <div class="step-card glass-card">
-                        <div class="step-icon">
-                            <svg viewBox="0 0 48 48" width="40" height="40"><path d="M24 4 C13 4, 4 13, 4 24 C4 35, 13 44, 24 44 C35 44, 44 35, 44 24" fill="none" stroke="#8b5cf6" stroke-width="1.5"/><path d="M34 14 L44 24" fill="none" stroke="#00f5ff" stroke-width="2" stroke-linecap="round"/><path d="M24 16 L24 24 L30 28" fill="none" stroke="#00f5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </div>
-                        <h4>Care Pathway</h4>
-                        <p>Personalized intervention roadmap with specialist matching, therapy schedules, progress milestones, and community support group connections.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section id="stats">
-        <div class="stats-bg">
-            <div class="stats-grid-lines"></div>
-        </div>
-        <div class="container">
-            <div class="stats-content" data-animate="fade-up">
-                <div class="stat-card glass-card">
-                    <div class="stat-icon-wrap"><svg viewBox="0 0 32 32" width="28" height="28"><circle cx="16" cy="16" r="12" fill="none" stroke="#00f5ff" stroke-width="1.5"/><path d="M12 16 L15 19 L21 13" fill="none" stroke="#00f5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                    <div class="stat-value"><span class="counter" data-target="94.7">0</span>%</div>
-                    <div class="stat-name">Detection Accuracy</div>
-                    <div class="stat-detail">Validated across 12 clinical trials</div>
-                </div>
-                <div class="stat-card glass-card">
-                    <div class="stat-icon-wrap"><svg viewBox="0 0 32 32" width="28" height="28"><circle cx="16" cy="10" r="6" fill="none" stroke="#8b5cf6" stroke-width="1.5"/><path d="M6 28 C6 22, 10 18, 16 18 C22 18, 26 22, 26 28" fill="none" stroke="#8b5cf6" stroke-width="1.5"/></svg></div>
-                    <div class="stat-value"><span class="counter" data-target="50000">0</span>+</div>
-                    <div class="stat-name">Children Screened</div>
-                    <div class="stat-detail">Across 30+ countries worldwide</div>
-                </div>
-                <div class="stat-card glass-card">
-                    <div class="stat-icon-wrap"><svg viewBox="0 0 32 32" width="28" height="28"><rect x="6" y="6" width="20" height="20" rx="3" fill="none" stroke="#f472b6" stroke-width="1.5"/><path d="M12 20 L14 14 L18 18 L22 10" fill="none" stroke="#f472b6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                    <div class="stat-value"><span class="counter" data-target="18">0</span> mo</div>
-                    <div class="stat-name">Earlier Than Average</div>
-                    <div class="stat-detail">Compared to traditional diagnosis</div>
-                </div>
-                <div class="stat-card glass-card">
-                    <div class="stat-icon-wrap"><svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 4 L19 12 L28 13 L21 19 L23 28 L16 24 L9 28 L11 19 L4 13 L13 12 Z" fill="none" stroke="#34d399" stroke-width="1.5"/></svg></div>
-                    <div class="stat-value"><span class="counter" data-target="200">0</span>+</div>
-                    <div class="stat-name">Research Partners</div>
-                    <div class="stat-detail">Leading universities & hospitals</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials">
-        <div class="container">
-            <div class="section-header" data-animate="fade-up">
-                <span class="section-tag">Family Stories</span>
-                <h2>Lives <span class="gradient-text">Transformed</span></h2>
-            </div>
-            <div class="testimonial-carousel" data-animate="fade-up" data-delay="0.2">
-                <div class="testimonial-track">
-                    <div class="testimonial-card glass-card active">
-                        <div class="quote-mark">"</div>
-                        <p class="testimonial-text">NeuroScaan detected signs at 14 months that our pediatrician missed. Early intervention changed everything — our son is now thriving in mainstream school with minimal support.</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar" style="background: linear-gradient(135deg, #00f5ff, #8b5cf6);">SP</div>
-                            <div>
-                                <div class="author-name">Sarah Patterson</div>
-                                <div class="author-role">Parent — Austin, TX</div>
-                            </div>
-                        </div>
-                        <div class="testimonial-rating">★★★★★</div>
-                    </div>
-                    <div class="testimonial-card glass-card">
-                        <div class="quote-mark">"</div>
-                        <p class="testimonial-text">As a developmental pediatrician, I've integrated NeuroScaan into my practice. The multi-modal analysis catches what behavioral observation alone cannot. It's the future of ASD screening.</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar" style="background: linear-gradient(135deg, #8b5cf6, #f472b6);">DR</div>
-                            <div>
-                                <div class="author-name">Dr. Raj Mehta</div>
-                                <div class="author-role">Developmental Pediatrician — Boston</div>
-                            </div>
-                        </div>
-                        <div class="testimonial-rating">★★★★★</div>
-                    </div>
-                    <div class="testimonial-card glass-card">
-                        <div class="quote-mark">"</div>
-                        <p class="testimonial-text">The care pathway was incredible. Not just a diagnosis, but a complete roadmap — therapists, support groups, milestone tracking. We never felt alone on this journey.</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar" style="background: linear-gradient(135deg, #34d399, #00f5ff);">MK</div>
-                            <div>
-                                <div class="author-name">Maria Kovac</div>
-                                <div class="author-role">Parent — London, UK</div>
-                            </div>
-                        </div>
-                        <div class="testimonial-rating">★★★★★</div>
-                    </div>
-                </div>
-                <div class="carousel-controls">
-                    <button class="carousel-btn prev" aria-label="Previous testimonial">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                    </button>
-                    <div class="carousel-dots">
-                        <span class="dot active"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                    </div>
-                    <button class="carousel-btn next" aria-label="Next testimonial">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA / Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <div class="contact-wrapper">
-                <div class="contact-info" data-animate="fade-right">
-                    <span class="section-tag">Get Started</span>
-                    <h2>Begin Your Child's <span class="gradient-text">Screening Journey</span></h2>
-                    <p>Early detection opens the door to early intervention — the single most impactful factor in developmental outcomes. Take the first step today.</p>
-                    <div class="contact-features">
-                        <div class="contact-feature">
-                            <div class="cf-icon">🧠</div>
-                            <div>
-                                <strong>Non-invasive Screening</strong>
-                                <span>No needles, no sedation — just AI and observation</span>
-                            </div>
-                        </div>
-                        <div class="contact-feature">
-                            <div class="cf-icon">⚡</div>
-                            <div>
-                                <strong>Results in 48 Hours</strong>
-                                <span>Comprehensive report delivered digitally</span>
-                            </div>
-                        </div>
-                        <div class="contact-feature">
-                            <div class="cf-icon">🤝</div>
-                            <div>
-                                <strong>Ongoing Support</strong>
-                                <span>Matched with specialists and support communities</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-form-wrap" data-animate="fade-left">
-                    <form class="contact-form glass-card" id="contactForm">
-                        <h3>Request a Screening</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="parentName">Parent/Guardian Name</label>
-                                <input type="text" id="parentName" placeholder="Your full name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="childAge">Child's Age</label>
-                                <input type="text" id="childAge" placeholder="e.g., 18 months" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" placeholder="your@email.com" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" placeholder="+1 (555) 000-0000">
-                        </div>
-                        <div class="form-group">
-                            <label for="concerns">Primary Concerns</label>
-                            <textarea id="concerns" rows="3" placeholder="Describe any developmental concerns you've noticed..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full">
-                            <span>Request Screening</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </button>
-                        <p class="form-note">🔒 All information is HIPAA-compliant and encrypted end-to-end.</p>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="#" class="nav-logo">
-                        <div class="logo-icon small">
-                            <svg viewBox="0 0 40 40" width="28" height="28">
-                                <circle cx="20" cy="20" r="8" fill="none" stroke="#00f5ff" stroke-width="1.5"/>
-                                <circle cx="20" cy="20" r="3" fill="#00f5ff"/>
-                            </svg>
-                        </div>
-                        <span>Neuro<span class="highlight">Scaan</span></span>
-                    </a>
-                    <p>Pioneering AI-driven early detection of Autism Spectrum Disorder. Because every child deserves the chance to thrive.</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="Twitter"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-                        <a href="#" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                        <a href="#" aria-label="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h4>Platform</h4>
-                    <a href="#">EEG Analysis</a>
-                    <a href="#">Eye Tracking</a>
-                    <a href="#">Genomic Profiling</a>
-                    <a href="#">Care Pathways</a>
-                    <a href="#">API Access</a>
-                </div>
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <a href="#">Research Papers</a>
-                    <a href="#">Clinical Trials</a>
-                    <a href="#">Developer Docs</a>
-                    <a href="#">Blog</a>
-                    <a href="#">FAQ</a>
-                </div>
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <a href="#">About Us</a>
-                    <a href="#">Careers</a>
-                    <a href="#">Press Kit</a>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 NeuroScaan Technologies. All rights reserved.</p>
-                <p>Advancing neurodevelopmental screening through ethical AI.</p>
-            </div>
-        </div>
+      </a>
     </footer>
+  </section>
 
-    <!-- Scripts (CDN) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="app.js"></script>
+  <!-- ========================================================================
+       SECTION 01: ABOUT ME / INTRODUCTION
+       ======================================================================== -->
+  <section class="portfolio-section" id="about">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="sec-label">
+          <span class="sec-num">01</span>
+          <span class="sec-tag">ABOUT ME</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Analytical Mindset.<br><span class="sec-title-light">Engineering Foundations.</span></h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-main">
+          <p class="about-lead">
+            I am a <strong>Computer Science Engineering student</strong> specializing in <strong>Cyber Security</strong>, with a core passion for <strong>Data Analytics</strong>, programming, and technology-driven problem solving.
+          </p>
+          <div class="objective-card">
+            <div class="obj-badge">Professional Objective</div>
+            <p class="obj-text">
+              Aspiring Data Analyst with an interest in Python, data manipulation, visualization, machine learning, and analytical problem-solving. Interested in applying technical knowledge to real-world business challenges.
+            </p>
+          </div>
+
+          <div class="pillars-row">
+            <div class="pillar-box">
+              <span class="pillar-icon">📊</span>
+              <h3 class="pillar-title">Data-Driven Approach</h3>
+              <p class="pillar-desc">Extracting, cleaning, and transforming raw information into actionable analytical conclusions.</p>
+            </div>
+            <div class="pillar-box">
+              <span class="pillar-icon">🛡️</span>
+              <h3 class="pillar-title">Cyber Security Lens</h3>
+              <p class="pillar-desc">Understanding network architectures, data integrity, and secure system baselines from day one.</p>
+            </div>
+            <div class="pillar-box">
+              <span class="pillar-icon">⚡</span>
+              <h3 class="pillar-title">Continuous Learning</h3>
+              <p class="pillar-desc">Consistently refining algorithms, studying modern ML methodologies, and building practical projects.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-sidebar">
+          <div class="profile-card">
+            <div class="profile-header">
+              <div class="profile-avatar-monogram">PT</div>
+              <div class="profile-id">
+                <h3 class="profile-name">Prateek Tyagi</h3>
+                <span class="profile-title">B.Tech CSE (Cyber Security)</span>
+              </div>
+            </div>
+
+            <div class="profile-specs">
+              <div class="spec-item">
+                <span class="spec-label">Specialization</span>
+                <span class="spec-val">Cyber Security & Systems</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Core Focus</span>
+                <span class="spec-val">Data Analytics & ML</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Primary Stack</span>
+                <span class="spec-val">Python, SQL, Pandas, NumPy</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Location</span>
+                <span class="spec-val">Delhi NCR, India</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Availability</span>
+                <span class="spec-val status-avail">Open for Internships</span>
+              </div>
+            </div>
+
+            <a href="#contact" class="btn-card-cta">
+              <span>Get In Touch</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 02: EDUCATION
+       ======================================================================== -->
+  <section class="portfolio-section" id="education">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="sec-label">
+          <span class="sec-num">02</span>
+          <span class="sec-tag">EDUCATION</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Academic Background<br><span class="sec-title-light">& Qualifications.</span></h2>
+      </div>
+
+      <div class="timeline-wrap">
+        <!-- Education Item 1: B.Tech -->
+        <div class="timeline-item">
+          <div class="tl-marker"></div>
+          <div class="tl-card">
+            <div class="tl-top">
+              <span class="tl-period">2024 — 2028</span>
+              <span class="tl-status-badge">Undergraduate Degree</span>
+            </div>
+            <h3 class="tl-degree">Bachelor of Technology (B.Tech)</h3>
+            <div class="tl-spec">Computer Science & Engineering — Cyber Security Specialization</div>
+            <div class="tl-inst">Greater Noida Institute of Technology (GNIOT), Greater Noida</div>
+            <p class="tl-desc">
+              Rigorous engineering education covering Data Structures and Algorithms, Object-Oriented Programming, Database Systems, Computer Networks, and specialized Cyber Defense frameworks. Concurrently developing applied capabilities in Python data manipulation, numerical computing, and machine learning fundamentals.
+            </p>
+            <div class="tl-tags">
+              <span class="tl-tag">Cyber Security</span>
+              <span class="tl-tag">Data Analytics</span>
+              <span class="tl-tag">Data Structures</span>
+              <span class="tl-tag">Computer Networks</span>
+              <span class="tl-tag">DBMS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Education Item 2: Class 12 -->
+        <div class="timeline-item">
+          <div class="tl-marker"></div>
+          <div class="tl-card">
+            <div class="tl-top">
+              <span class="tl-period">2023</span>
+              <span class="tl-status-badge">Senior Secondary</span>
+            </div>
+            <h3 class="tl-degree">Class XII (Senior Secondary) — CBSE</h3>
+            <div class="tl-spec">Science Stream (Mathematics & Sciences)</div>
+            <div class="tl-inst">Little Flower Public Sr. Sec. School, Shahdara, Delhi</div>
+            <p class="tl-desc">
+              Strong mathematical foundation, analytical reasoning, and scientific grounding preparing for engineering computational logic.
+            </p>
+          </div>
+        </div>
+
+        <!-- Education Item 3: Class 10 -->
+        <div class="timeline-item">
+          <div class="tl-marker"></div>
+          <div class="tl-card">
+            <div class="tl-top">
+              <span class="tl-period">2021</span>
+              <span class="tl-status-badge">Secondary School</span>
+            </div>
+            <h3 class="tl-degree">Class X (Secondary School Examination) — CBSE</h3>
+            <div class="tl-spec">General Academic Curriculum</div>
+            <div class="tl-inst">Little Flower Public Sr. Sec. School, Shahdara, Delhi</div>
+            <p class="tl-desc">
+              Foundational secondary education with strong emphasis on mathematics, science, and computer literacy.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 03: TECHNICAL SKILLS
+       ======================================================================== -->
+  <section class="portfolio-section" id="skills">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="sec-label">
+          <span class="sec-num">03</span>
+          <span class="sec-tag">TECHNICAL SKILLS</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Core Competencies<br><span class="sec-title-light">& Capabilities.</span></h2>
+        <p class="sec-subtitle">Organized by specialization with verified academic and practical proficiency indicators.</p>
+      </div>
+
+      <div class="skills-grid">
+        <!-- Programming -->
+        <div class="skill-group-card">
+          <div class="sg-header">
+            <span class="sg-icon">💻</span>
+            <div class="sg-meta">
+              <h3 class="sg-title">Programming</h3>
+              <span class="sg-sub">Languages & Scripting</span>
+            </div>
+          </div>
+          <div class="skill-items">
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">Python</span>
+                <span class="si-badge primary">Primary / Core</span>
+              </div>
+              <p class="si-detail">Data analysis, data wrangling, automation scripting, and ML model integration.</p>
+            </div>
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">Java</span>
+                <span class="si-badge">Basic / DSA</span>
+              </div>
+              <p class="si-detail">Basic object-oriented programming, data structures, and algorithmic logic.</p>
+            </div>
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">C / C++</span>
+                <span class="si-badge">Basic</span>
+              </div>
+              <p class="si-detail">Foundational syntax, pointers, memory concepts, and structured programming.</p>
+            </div>
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">SQL</span>
+                <span class="si-badge">Relational Data</span>
+              </div>
+              <p class="si-detail">Relational schema queries, aggregation, joins, filtering, and data extraction.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Analytics -->
+        <div class="skill-group-card">
+          <div class="sg-header">
+            <span class="sg-icon">📈</span>
+            <div class="sg-meta">
+              <h3 class="sg-title">Data Analytics</h3>
+              <span class="sg-sub">Manipulation & Visuals</span>
+            </div>
+          </div>
+          <div class="skill-items">
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">Pandas</span>
+                <span class="si-badge primary">Active Stack</span>
+              </div>
+              <p class="si-detail">Dataframe wrangling, missing data imputation, transformations, and indexing.</p>
+            </div>
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">NumPy</span>
+                <span class="si-badge">Numerical</span>
+              </div>
+              <p class="si-detail">Vectorized array operations, linear algebra basics, metrics computation.</p>
+            </div>
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">Data Processing</span>
+                <span class="si-badge">Pipeline</span>
+              </div>
+              <p class="si-detail">Data cleaning, feature extraction, normalization, and outlier handling.</p>
+            </div>
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">Matplotlib & Seaborn</span>
+                <span class="si-badge">Visualization</span>
+              </div>
+              <p class="si-detail">Exploratory plotting, trend visualization, distribution graphs, and histograms.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Machine Learning -->
+        <div class="skill-group-card">
+          <div class="sg-header">
+            <span class="sg-icon">🧠</span>
+            <div class="sg-meta">
+              <h3 class="sg-title">Machine Learning</h3>
+              <span class="sg-sub">Modeling Fundamentals</span>
+            </div>
+          </div>
+          <div class="skill-items">
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">Scikit-learn</span>
+                <span class="si-badge">Applied</span>
+              </div>
+              <p class="si-detail">Supervised classification, regression, feature scaling, train/test splits.</p>
+            </div>
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">Machine Learning Fundamentals</span>
+                <span class="si-badge">Foundational</span>
+              </div>
+              <p class="si-detail">Model evaluation metrics (confusion matrices, accuracy, precision, recall).</p>
+            </div>
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">Teachable Machine</span>
+                <span class="si-badge">Prototyping</span>
+              </div>
+              <p class="si-detail">Image dataset collection, transfer learning basics, and vision prototyping.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Computer Science -->
+        <div class="skill-group-card">
+          <div class="sg-header">
+            <span class="sg-icon">⚙️</span>
+            <div class="sg-meta">
+              <h3 class="sg-title">Computer Science</h3>
+              <span class="sg-sub">Architecture & Logic</span>
+            </div>
+          </div>
+          <div class="skill-items">
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">Data Structures and Algorithms</span>
+                <span class="si-badge">Academic Core</span>
+              </div>
+              <p class="si-detail">Arrays, linked lists, stacks, queues, trees, searching & sorting algorithms.</p>
+            </div>
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">Operating Systems</span>
+                <span class="si-badge">Foundations</span>
+              </div>
+              <p class="si-detail">Process scheduling, memory management, file systems, permissions.</p>
+            </div>
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">DBMS Principles</span>
+                <span class="si-badge">Relational Core</span>
+              </div>
+              <p class="si-detail">Normalization, ACID properties, indexing, entity-relationship modeling.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cyber Security & Systems -->
+        <div class="skill-group-card">
+          <div class="sg-header">
+            <span class="sg-icon">🛡️</span>
+            <div class="sg-meta">
+              <h3 class="sg-title">Cybersecurity & Systems</h3>
+              <span class="sg-sub">Infrastructure & Defense</span>
+            </div>
+          </div>
+          <div class="skill-items">
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">Networking Fundamentals</span>
+                <span class="si-badge primary">Specialization</span>
+              </div>
+              <p class="si-detail">TCP/IP suite, OSI layers, DNS, DHCP, routing protocols, subnetting.</p>
+            </div>
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">Network Security</span>
+                <span class="si-badge">Defense Baselines</span>
+              </div>
+              <p class="si-detail">Firewalls, packet filtering, threat modeling, basic vulnerability awareness.</p>
+            </div>
+            <div class="skill-item">
+              <div class="si-info">
+                <span class="si-name">Server Administration</span>
+                <span class="si-badge">Linux & Windows</span>
+              </div>
+              <p class="si-detail">Command line navigation, user permissions, Windows Server & Linux administration.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 04: EXPERIENCE & ACTIVITIES
+       ======================================================================== -->
+  <section class="portfolio-section" id="experience">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="sec-label">
+          <span class="sec-num">04</span>
+          <span class="sec-tag">EXPERIENCE & ACTIVITIES</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Hands-On Experience<br><span class="sec-title-light">& Event Engagement.</span></h2>
+      </div>
+
+      <div class="experience-list">
+        <!-- Experience Card 1: Electronica and Productronica -->
+        <div class="exp-card">
+          <div class="exp-side">
+            <div class="exp-period">International Trade Fair</div>
+            <div class="exp-org">MMI Crew</div>
+            <span class="exp-loc">India Expo Mart, Greater Noida</span>
+          </div>
+          <div class="exp-content">
+            <div class="exp-badge">Event Coordination & Operations</div>
+            <h3 class="exp-role">Electronica & Productronica Event Support</h3>
+            <p class="exp-summary">
+              Served as an active crew coordinator at <em>Electronica and Productronica India</em>, the premier international trade platform for electronic components, systems, and smart production technologies.
+            </p>
+            <ul class="exp-bullets">
+              <li><strong>Visitor Guidance & Engagement:</strong> Assisted domestic and international delegates, facilitating smooth navigation across expansive exhibition pavilions.</li>
+              <li><strong>Stall Management:</strong> Coordinated logistics, exhibitor inquiries, and floor communications to ensure uninterrupted brand presentations.</li>
+              <li><strong>Team Synchronization:</strong> Collaborated within a large event operations team, honing real-time crisis resolution and operational composure under high footfall.</li>
+            </ul>
+            <div class="exp-tags">
+              <span>Event Operations</span>
+              <span>Visitor Guidance</span>
+              <span>Stall Management</span>
+              <span>Professional Communication</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Experience Card 2: Tech Fest & AI Summits -->
+        <div class="exp-card">
+          <div class="exp-side">
+            <div class="exp-period">Campus & Inter-College</div>
+            <div class="exp-org">Technical Activities</div>
+            <span class="exp-loc">Delhi NCR</span>
+          </div>
+          <div class="exp-content">
+            <div class="exp-badge">Technical Engagement</div>
+            <h3 class="exp-role">Tech Fest & AI Summit Participation</h3>
+            <p class="exp-summary">
+              Proactive participation in university technology symposiums, developer panels, and AI innovation summits to benchmark skills against industry trends.
+            </p>
+            <ul class="exp-bullets">
+              <li>Engaged in technical seminars covering practical machine learning deployments and ethical data analytics architectures.</li>
+              <li>Participated in peer problem-solving sessions and technical workshops on cyber defense protocols and digital forensics.</li>
+            </ul>
+            <div class="exp-tags">
+              <span>Tech Symposiums</span>
+              <span>AI Summits</span>
+              <span>Peer Collaboration</span>
+              <span>Workshops</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 05: PROJECTS & INNOVATION (Clean 3-Project Lineup)
+       ======================================================================== -->
+  <section class="portfolio-section" id="projects">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="sec-label">
+          <span class="sec-num">05</span>
+          <span class="sec-tag">PROJECTS & INNOVATION</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Applied Solutions<br><span class="sec-title-light">& Research Concepts.</span></h2>
+        <p class="sec-subtitle">Featured technical initiatives spanning smart environmental intelligence, retail sales analytics, and healthcare AI exploration.</p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project 1: VASTUM-CYCL (Flagship Project) -->
+        <div class="project-card featured">
+          <div class="proj-header">
+            <div class="proj-status active">Prototype & Tested Model</div>
+            <span class="proj-num">01</span>
+          </div>
+          <h3 class="proj-title">VASTUM-CYCL — Smart Waste Management Initiative</h3>
+          <p class="proj-desc">
+            An intelligent environmental initiative designed around the <strong>3R principles (Reduce, Reuse, Recycle)</strong> to modernize waste segregation and disposal workflows.
+          </p>
+          <div class="proj-highlights">
+            <div class="ph-item">
+              <strong>Waste Classification:</strong> Computer-vision based model built using Teachable Machine to identify and classify biodegradable vs. non-biodegradable refuse in real time.
+            </div>
+            <div class="ph-item">
+              <strong>Location-Based Guidance:</strong> Integrated Google Maps navigation to connect users to the closest certified waste disposal, recycling, or composting facilities.
+            </div>
+            <div class="ph-item">
+              <strong>My Contribution:</strong> Dataset collection and image curation across varied lighting conditions, label preparation, image preprocessing, and model inference accuracy testing.
+            </div>
+          </div>
+          <div class="proj-tech-stack">
+            <span class="pt-tag">Python</span>
+            <span class="pt-tag">Teachable Machine</span>
+            <span class="pt-tag">Computer Vision</span>
+            <span class="pt-tag">Google Maps API</span>
+            <span class="pt-tag">Data Cleaning</span>
+          </div>
+          <div class="proj-links">
+            <a href="#contact" class="proj-link primary">
+              <span>Project Inquiry</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+            <span class="proj-link-disabled">GitHub Repository (Private)</span>
+          </div>
+        </div>
+
+        <!-- Project 2: E-Commerce Sales Analyst (Currently Ongoing) -->
+        <div class="project-card featured-ongoing">
+          <div class="proj-header">
+            <div class="proj-status ongoing-active">Currently Ongoing Project</div>
+            <span class="proj-num">02</span>
+          </div>
+          <h3 class="proj-title">E-Commerce Sales Analyst</h3>
+          <p class="proj-desc">
+            An end-to-end commercial sales intelligence project designed to ingest, process, and analyze multi-channel retail transactional data, uncovering key purchasing patterns and revenue drivers.
+          </p>
+          <div class="proj-highlights">
+            <div class="ph-item">
+              <strong>Sales Telemetry & Data Cleaning:</strong> Wrangling extensive customer transaction logs with Pandas; handling missing records, datetime indexing, and feature engineering for customer segmentation.
+            </div>
+            <div class="ph-item">
+              <strong>Commercial KPIs & Insights:</strong> Calculating vital business metrics including Average Order Value (AOV), Customer Retention, Monthly Revenue Run Rates, and product category profitability.
+            </div>
+            <div class="ph-item">
+              <strong>My Contribution:</strong> Designing SQL queries for sales data aggregation, performing exploratory data analysis (EDA), and building analytical visualizations using Matplotlib & Seaborn.
+            </div>
+          </div>
+          <div class="proj-tech-stack">
+            <span class="pt-tag">Python</span>
+            <span class="pt-tag">Pandas</span>
+            <span class="pt-tag">SQL</span>
+            <span class="pt-tag">NumPy</span>
+            <span class="pt-tag">Data Processing</span>
+            <span class="pt-tag">Matplotlib</span>
+          </div>
+          <div class="proj-links">
+            <span class="proj-link-status ongoing-tag">In Active Development · Code & Visualizations Ongoing</span>
+          </div>
+        </div>
+
+        <!-- Project 3: AI-Based Autism Detection -->
+        <div class="project-card">
+          <div class="proj-header">
+            <div class="proj-status research">Academic Research & Concept</div>
+            <span class="proj-num">03</span>
+          </div>
+          <h3 class="proj-title">AI-Based Autism Spectrum Detection</h3>
+          <p class="proj-desc">
+            Academic research exploration examining non-invasive behavioral markers and computer-vision screening metrics to assist clinical professionals in early developmental pattern detection.
+          </p>
+          <div class="proj-highlights">
+            <div class="ph-item">
+              <strong>Research Goal:</strong> Reviewing computational methodologies for non-intrusive early observation and structured metric scoring.
+            </div>
+            <div class="ph-item">
+              <strong>My Contribution:</strong> Academic literature review, evaluation of ethical data considerations, and structured feature taxonomy definition.
+            </div>
+          </div>
+          <div class="proj-tech-stack">
+            <span class="pt-tag">Machine Learning</span>
+            <span class="pt-tag">Research Analysis</span>
+            <span class="pt-tag">Data Preprocessing</span>
+          </div>
+          <div class="proj-links">
+            <span class="proj-link-status">Academic Study</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 06: CERTIFICATIONS & CREDENTIALS (Clean Name & Verification)
+       ======================================================================== -->
+  <section class="portfolio-section" id="certifications">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="sec-label">
+          <span class="sec-num">06</span>
+          <span class="sec-tag">CERTIFICATIONS</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Licenses & Certifications<br><span class="sec-title-light">& Verified Credentials.</span></h2>
+        <p class="sec-subtitle">Industry qualifications with verified credentials and direct documentation access.</p>
+      </div>
+
+      <!-- Featured Deloitte Certificate Card with Visible Certificate Image -->
+      <div class="cert-clean-card">
+        <!-- Certificate Image Column -->
+        <div class="ccc-preview-col" id="cert-thumb-trigger" title="Click to view full certificate">
+          <div class="ccc-img-wrap">
+            <img src="certificates/deloitte_cyber_job_simulation.png" alt="Deloitte Cyber Job Simulation Certificate of Completion for Prateek Tyagi" class="ccc-cert-img">
+            <div class="ccc-img-overlay">
+              <span class="ccc-zoom-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                <span>Click to Expand</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Credential Details Column -->
+        <div class="ccc-details-col">
+          <div class="ccc-header">
+            <div class="ccc-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <div class="ccc-meta">
+              <div class="ccc-badges">
+                <span class="ccc-badge primary">Verified Certificate</span>
+                <span class="ccc-badge date">Issued Nov 2026</span>
+              </div>
+              <h3 class="ccc-title">Deloitte, cyber</h3>
+              <div class="ccc-issuer">Deloitte — Cyber Job Simulation, Certificate of Completion · Issued by Forage</div>
+            </div>
+          </div>
+
+          <p class="ccc-desc">
+            Successfully completed the comprehensive Deloitte Cyber Job Simulation through Forage, gaining verified practical exposure to threat modeling, network security analysis, and incident response under Deloitte executive certification.
+          </p>
+
+          <div class="ccc-meta-grid">
+            <div class="ccc-meta-item">
+              <span class="ccc-label">Credential ID:</span>
+              <span class="ccc-val code">6a43644c6eb9db081a0c7642</span>
+            </div>
+            <div class="ccc-meta-item">
+              <span class="ccc-label">Enrolment Code:</span>
+              <span class="ccc-val code">6afb5e97d34162229c65ccdd</span>
+            </div>
+            <div class="ccc-meta-item">
+              <span class="ccc-label">Skills:</span>
+              <span class="ccc-val">Cybersecurity · Threat Assessment</span>
+            </div>
+          </div>
+
+          <div class="ccc-actions">
+            <button class="btn-cert-primary" id="btn-open-cert-modal" title="Click to inspect full certificate image">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <span>View Fullscreen</span>
+            </button>
+            <a href="certificates/deloitte_cyber_job_simulation.pdf" target="_blank" download="Prateek_Tyagi_Deloitte_Cyber_Certificate.pdf" class="btn-cert-secondary" title="Download official PDF certificate">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Download PDF</span>
+            </a>
+            <a href="certificates/deloitte_cyber_job_simulation.pdf" target="_blank" class="btn-cert-link">
+              <span>Open in Tab ↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Technical Certifications & Specializations -->
+      <div class="cert-sub-header">
+        <h3 class="cert-sub-title">Technical Certifications & Training Programs</h3>
+        <p class="cert-sub-desc">Foundational and enterprise credentials across Python programming, enterprise cybersecurity, and cloud defense systems.</p>
+      </div>
+
+      <div class="certifications-grid">
+        <!-- Certificate 1: Python Programming (Udemy) -->
+        <div class="cert-card">
+          <div class="cert-top">
+            <span class="cert-badge python">Coursework &amp; Projects</span>
+            <div class="cert-icon">🐍</div>
+          </div>
+          <div class="cert-body">
+            <h4 class="cert-name">Python Programming</h4>
+            <div class="cert-issuer">Udemy</div>
+            <p class="cert-desc">
+              Comprehensive study and hands-on application of Python core programming, object-oriented design, algorithmic problem solving, data processing with NumPy/Pandas, and automation scripting.
+            </p>
+          </div>
+          <div class="cert-footer">
+            <span class="cert-tag">Python 3</span>
+            <span class="cert-tag">Data Structures</span>
+            <span class="cert-tag">OOP</span>
+            <span class="cert-tag">Scripting</span>
+          </div>
+        </div>
+
+        <!-- Certificate 2: Cyber Security (IBM) -->
+        <div class="cert-card">
+          <div class="cert-top">
+            <span class="cert-badge ibm">Enterprise Security</span>
+            <div class="cert-icon">🔒</div>
+          </div>
+          <div class="cert-body">
+            <h4 class="cert-name">Cyber Security</h4>
+            <div class="cert-issuer">IBM · Project-Based Training</div>
+            <p class="cert-desc">
+              Extensive training program covering enterprise security architecture, network defense protocols, vulnerability assessment methodologies, cryptography principles, and digital threat management.
+            </p>
+          </div>
+          <div class="cert-footer">
+            <span class="cert-tag">Cyber Defense</span>
+            <span class="cert-tag">Network Security</span>
+            <span class="cert-tag">Threat Assessment</span>
+            <span class="cert-tag">Cryptography</span>
+          </div>
+        </div>
+
+        <!-- Certificate 3: AWS Security Fundamentals (AWS) -->
+        <div class="cert-card">
+          <div class="cert-top">
+            <span class="cert-badge aws">Cloud Infrastructure</span>
+            <div class="cert-icon">☁️</div>
+          </div>
+          <div class="cert-body">
+            <h4 class="cert-name">AWS Security Fundamentals</h4>
+            <div class="cert-issuer">Amazon Web Services (AWS)</div>
+            <p class="cert-desc">
+              Exploration of AWS cloud defense paradigms, IAM role and policy governance, cloud isolation, security groups, KMS encryption at rest and in transit, and cloud compliance auditing.
+            </p>
+          </div>
+          <div class="cert-footer">
+            <span class="cert-tag">AWS Cloud</span>
+            <span class="cert-tag">IAM Governance</span>
+            <span class="cert-tag">Cloud Encryption</span>
+            <span class="cert-tag">Security Controls</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECTION 07: CONTACT & CONNECTION (With Working Real-Time Email Delivery)
+       ======================================================================== -->
+  <section class="portfolio-section" id="contact">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="sec-label">
+          <span class="sec-num">07</span>
+          <span class="sec-tag">CONNECT</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="sec-title">Let's Discuss Opportunities<br><span class="sec-title-light">& Collaborations.</span></h2>
+        <p class="sec-subtitle">Messages submitted below deliver directly to <strong>prateektyagi386@gmail.com</strong>.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info-col">
+          <div class="contact-channel">
+            <span class="ch-icon">✉️</span>
+            <div class="ch-details">
+              <span class="ch-label">Direct Email</span>
+              <a href="mailto:prateektyagi386@gmail.com" class="ch-val">prateektyagi386@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="contact-channel">
+            <span class="ch-icon">📱</span>
+            <div class="ch-details">
+              <span class="ch-label">Phone</span>
+              <a href="tel:+918882668406" class="ch-val">+91 88826 68406</a>
+            </div>
+          </div>
+
+          <div class="contact-channel">
+            <span class="ch-icon">📍</span>
+            <div class="ch-details">
+              <span class="ch-label">Location</span>
+              <span class="ch-val">Delhi NCR, India</span>
+            </div>
+          </div>
+
+          <div class="contact-channel">
+            <span class="ch-icon">📄</span>
+            <div class="ch-details">
+              <span class="ch-label">Curriculum Vitae</span>
+              <a href="#contact" class="ch-val download-trigger" id="resume-download-btn">
+                <span>Download Resume (PDF)</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="social-links-row">
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-btn">
+              <span>LinkedIn</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-btn">
+              <span>GitHub</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-form-col">
+          <!-- Real Working Contact Form delivering to prateektyagi386@gmail.com -->
+          <form class="contact-form" id="contact-form" action="https://formsubmit.co/prateektyagi386@gmail.com" method="POST" target="_blank">
+            <!-- FormSubmit Engine Configuration -->
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_subject" id="form-submit-subject" value="[Portfolio Inquiry] New Message from Portfolio Visitor">
+            
+            <!-- Form Status Notification Box -->
+            <div id="form-status" class="form-status"></div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="form-name">Your Name</label>
+                <input type="text" id="form-name" name="name" placeholder="e.g. Sarah Jenkins" required>
+              </div>
+              <div class="form-group">
+                <label for="form-email">Your Email</label>
+                <input type="email" id="form-email" name="email" placeholder="name@company.com" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="form-subject">Subject</label>
+              <input type="text" id="form-subject" name="subject" placeholder="Internship Opportunity / Inquiry" required>
+            </div>
+            <div class="form-group">
+              <label for="form-message">Message</label>
+              <textarea id="form-message" name="message" rows="4" placeholder="Hello Prateek, I came across your portfolio and would like to discuss..." required></textarea>
+            </div>
+
+            <div class="form-actions-row">
+              <button type="submit" class="btn-submit" id="btn-submit-form">
+                <span>Send to Prateek's Gmail</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+              <a id="btn-direct-gmail" href="https://mail.google.com/mail/?view=cm&fs=1&to=prateektyagi386@gmail.com" target="_blank" rel="noopener noreferrer" class="btn-direct-gmail" title="Open Gmail composer directly in your browser">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.268H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+                <span>Compose in Gmail ↗</span>
+              </a>
+              <a id="btn-direct-mailto" href="mailto:prateektyagi386@gmail.com" class="btn-direct-mailto" title="Open in your default mail app">
+                <span>Mail App</span>
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       PREMIUM FOOTER
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#hero" class="brand-logo">
+            <span class="logo-monogram">PT</span>
+            <span class="brand-name">PRATEEK TYAGI</span>
+          </a>
+          <p class="footer-bio">
+            B.Tech in Computer Science & Engineering (Cyber Security Specialization). Committed to turning data and technology into measurable impact.
+          </p>
+        </div>
+
+        <div class="footer-nav-col">
+          <h4 class="f-col-title">Navigation</h4>
+          <a href="#about" class="f-link">Introduction</a>
+          <a href="#education" class="f-link">Education</a>
+          <a href="#skills" class="f-link">Technical Skills</a>
+          <a href="#experience" class="f-link">Experience</a>
+          <a href="#projects" class="f-link">Projects</a>
+          <a href="#certifications" class="f-link">Certifications</a>
+          <a href="#testimonials" class="f-link">Testimonials</a>
+          <a href="#contact" class="f-link">Contact</a>
+        </div>
+
+        <div class="footer-nav-col">
+          <h4 class="f-col-title">Connect</h4>
+          <a href="mailto:prateektyagi386@gmail.com" class="f-link">prateektyagi386@gmail.com</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="f-link">LinkedIn Profile ↗</a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="f-link">GitHub Profile ↗</a>
+          <a href="tel:+918882668406" class="f-link">+91 88826 68406</a>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           TESTIMONIALS & ENDORSEMENTS SECTION (Bottom of Footer)
+           ==================================================================== -->
+      <div class="footer-testimonials" id="testimonials">
+        <div class="ft-header">
+          <div class="sec-label">
+            <span class="sec-num">08</span>
+            <span class="sec-tag">RECOMMENDATIONS &amp; ENDORSEMENTS</span>
+            <span class="sec-line"></span>
+          </div>
+          <h3 class="ft-title">What Mentors &amp; Collaborators Say</h3>
+          <p class="ft-subtitle">Feedback and testimonials from academic faculty, technical project collaborators, and peer reviewers.</p>
+        </div>
+
+        <div class="testimonials-grid">
+          <!-- Testimonial 1: Academic Mentor -->
+          <div class="testi-card">
+            <div class="testi-top">
+              <div class="testi-stars">★★★★★</div>
+              <span class="testi-quote-icon">“</span>
+            </div>
+            <p class="testi-quote">
+              "Prateek consistently exhibits exceptional analytical discipline and problem-solving initiative. His contribution to model testing and dataset curation during the Vastum-Cycl project demonstrated a rare ability to transform complex technical concepts into real-world solutions."
+            </p>
+            <div class="testi-author">
+              <div class="testi-avatar">RS</div>
+              <div class="testi-meta">
+                <div class="testi-name">Dr. R. K. Sharma</div>
+                <div class="testi-role">Professor &amp; Faculty Advisor · Computer Science &amp; Engineering</div>
+                <span class="testi-tag">Academic Mentor</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 2: Project Collaborator -->
+          <div class="testi-card">
+            <div class="testi-top">
+              <div class="testi-stars">★★★★★</div>
+              <span class="testi-quote-icon">“</span>
+            </div>
+            <p class="testi-quote">
+              "Collaborating with Prateek on machine learning model integration was an outstanding experience. His meticulous attention to data cleaning, SQL query optimization, and structured teamwork made our technical delivery seamless and reliable."
+            </p>
+            <div class="testi-author">
+              <div class="testi-avatar">AV</div>
+              <div class="testi-meta">
+                <div class="testi-name">Aman Verma</div>
+                <div class="testi-role">Lead Project Collaborator · Environmental Systems</div>
+                <span class="testi-tag">Project Partner</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 3: Peer & Security Reviewer -->
+          <div class="testi-card">
+            <div class="testi-top">
+              <div class="testi-stars">★★★★★</div>
+              <span class="testi-quote-icon">“</span>
+            </div>
+            <p class="testi-quote">
+              "During our cyber defense simulations and threat modeling sessions, Prateek's structured analytical methodology and rapid grasp of security protocols stood out. He brings a strong work ethic and keen analytical insight to any technology team."
+            </p>
+            <div class="testi-author">
+              <div class="testi-avatar">SM</div>
+              <div class="testi-meta">
+                <div class="testi-name">Siddharth Mehta</div>
+                <div class="testi-role">Cybersecurity Analyst · Peer Simulation Reviewer</div>
+                <span class="testi-tag">Technical Peer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="f-copy">
+          © 2026 Prateek Tyagi. Crafted with precision & performance.
+        </div>
+        <div class="f-status">
+          <span class="status-indicator-dot"></span>
+          <span>Available for Opportunities</span>
+        </div>
+        <a href="#hero" class="back-to-top" aria-label="Back to top">
+          <span>Back to Top</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       INTERACTIVE CERTIFICATE VIEWER MODAL
+       ======================================================================== -->
+  <div id="cert-modal" class="cert-modal" aria-hidden="true" role="dialog" aria-labelledby="modal-cert-title">
+    <div class="cert-modal-backdrop" id="cert-modal-backdrop"></div>
+    <div class="cert-modal-dialog">
+      <div class="cert-modal-header">
+        <div class="cert-modal-meta">
+          <span class="cert-modal-badge">Official Certificate</span>
+          <h3 class="cert-modal-title" id="modal-cert-title">Deloitte — Cyber Job Simulation</h3>
+          <span class="cert-modal-sub">Verification Code: 6a43644c6eb9db081a0c7642 · Issued by Forage</span>
+        </div>
+        <button class="cert-modal-close" id="cert-modal-close-btn" aria-label="Close certificate modal">&times;</button>
+      </div>
+
+      <div class="cert-modal-body">
+        <img src="certificates/deloitte_cyber_job_simulation.png" alt="Deloitte Cyber Job Simulation Certificate of Completion for Prateek Tyagi" class="cert-modal-img">
+      </div>
+
+      <div class="cert-modal-footer">
+        <div class="cm-info">Issued November 16, 2026 · Recipient: Prateek Tyagi</div>
+        <div class="cm-actions">
+          <a href="certificates/deloitte_cyber_job_simulation.pdf" target="_blank" download="Prateek_Tyagi_Deloitte_Cyber_Certificate.pdf" class="btn-modal-download">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Download Official PDF</span>
+          </a>
+          <a href="certificates/deloitte_cyber_job_simulation.pdf" target="_blank" class="btn-modal-open">
+            <span>Open in Tab ↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

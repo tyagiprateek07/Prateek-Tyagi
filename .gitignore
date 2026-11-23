@@ -1,0 +1,8 @@
+# Ignore large zip archives (exceeds GitHub 100MB limit)
+*.zip
+resume/*.zip
+
+# OS & temporary files
+.DS_Store
+Thumbs.db
+desktop.ini

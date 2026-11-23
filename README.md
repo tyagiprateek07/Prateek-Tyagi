@@ -1,21 +1,17 @@
-# 🧠 NeuroScaan — Early Autism Spectrum Disorder Detection
+# 💼 Prateek Tyagi — Data Analytics & Cyber Security Portfolio
 
-An interactive 3D animated web platform for early Autism Spectrum Disorder (ASD) detection, featuring Three.js neural simulations and modern glassmorphism.
+A high-performance 3D animated portfolio resume built with custom HTML5 Canvas frame scrubbing engine, dual-theme styling, interactive experience showcase, and live certification viewer.
 
-## ✨ Key Features
-- **3D Brain Neural Network**: 300 animated neuron nodes with pulsing synaptic connections and wireframe orbital rings using Three.js.
-- **DNA Double Helix**: Rotating biological structure visualization.
-- **Particle Systems**: Interactive cosmic starfield and 2D floating neural network mesh overlay responding to cursor movement.
-- **Biometric Detection Pillars**: EEG signal processing, genomic risk profiling, and smart eye tracking.
-- **Interactive Process & Stats**: 4-step care pathway timeline and animated counters.
-- **Glassmorphic Design**: Modern dark theme with glowing neon gradients (cyan & purple).
-- **Responsive Layout**: Optimized for desktop, tablet, and mobile browsers.
+## 🚀 Live Demo
+🌐 **[https://tyagiprateek07.github.io/Prateek-Tyagi/](https://tyagiprateek07.github.io/Prateek-Tyagi/)**
 
-## 🛠️ Built With
-- **HTML5 & CSS3** (Custom glassmorphic styles, CSS animations)
-- **JavaScript (ES6+)**
-- **Three.js** (WebGL 3D rendering engine)
-- **GSAP & ScrollTrigger** (Smooth scroll and entrance animations)
+## ✨ Features
+- **Scroll-Driven Canvas Frame Animation**: Smooth frame scrubbing using 120-frame sequences at 30 FPS.
+- **Hero Slider / Carousel**: Highlighting core specializations in Data Analytics, Cyber Threat Defense, and Systems Architecture.
+- **Interactive CV & Certificates**: Integrated view of Deloitte Cyber Job Simulation credentials and full curriculum vitae.
+- **Dual Theme Support**: Dark / Light theme toggle with persisted user preference.
+- **Responsive & Optimized**: Preloaded asset management with adaptive rendering.
 
-## 🌐 Live Website
-Hosted with **GitHub Pages**: [https://tyagiprateek07.github.io/Prateek-Tyagi/](https://tyagiprateek07.github.io/Prateek-Tyagi/)
+## 🛠️ Tech Stack
+- HTML5 / CSS3 / JavaScript (ES6+)
+- Canvas API & High-Performance Rendering Loop
